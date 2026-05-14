@@ -56,6 +56,7 @@
             background: rgba(30, 248, 243, 0.1); color: var(--clr-logo-cyan); padding: 8px 20px;
             border-radius: 20px; border: 1px solid rgba(30, 248, 243, 0.3); text-decoration: none;
             font-size: 13px; font-weight: 700; transition: all 0.3s ease; cursor: pointer;
+            text-align: center;
         }
         .nav-cta:hover { background: rgba(30, 248, 243, 0.2); transform: translateY(-1px); box-shadow: 0 0 15px rgba(30, 248, 243, 0.3); }
 
@@ -93,7 +94,7 @@
         .floating-ui .value { font-size: 18px; font-weight: 600; color: #FFF; }
         
         /* DIMENSION INPUTS */
-        .dim-controls { display: flex; gap: 8px; margin-top: 8px; align-items: center; }
+        .dim-controls { display: flex; gap: 8px; margin-top: 8px; align-items: center; flex-wrap: wrap; }
         .dim-input-group { display: flex; align-items: center; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--clr-border); border-radius: 6px; padding: 4px 8px; }
         .dim-input-group span { font-size: 10px; color: var(--clr-text-muted); margin-right: 5px; }
         .dim-input-group input { 
@@ -113,7 +114,6 @@
         /* --- PHYSICS & DSP ENGINE --- */
         .science { padding: 100px 5%; border-top: 1px solid var(--clr-border); border-bottom: 1px solid var(--clr-border); background: rgba(17, 24, 39, 0.3); }
         .science-container { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; gap: 60px; }
-        @media(max-width: 900px) { .science-container { flex-direction: column; } }
         
         .science-text { flex: 1.2; }
         .science-text h2 { font-size: 2.2rem; margin-bottom: 20px; color: #FFF; }
@@ -144,13 +144,51 @@
         .logo-footer { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 10px; opacity: 0.8; }
         .logo-footer img { height: 24px; width: 24px; border-radius: 50%; }
         .footer-text { color: #6B7280; font-size: 0.9rem; }
+
+        /* --- MOBILE RESPONSIVENESS --- */
+        @media (max-width: 900px) { 
+            .science-container { flex-direction: column; } 
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 15px 5%; flex-direction: column; gap: 15px; background: rgba(8, 12, 22, 0.95); }
+            .nav-links { gap: 20px; flex-wrap: wrap; justify-content: center; }
+            .hero { padding: 180px 15px 40px; } /* Increased top padding to clear stacked nav */
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1rem; }
+            .btn-primary { padding: 14px 30px; font-size: 14px; }
+            
+            .hero-3d-wrapper { height: 550px; margin-top: 40px; }
+            
+            /* Re-arrange floating UIs to prevent overlapping */
+            .floating-ui { padding: 12px; }
+            .ui-top-left { top: 10px; left: 10px; right: 10px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+            .ui-top-right { top: auto; bottom: 160px; left: 10px; right: 10px; text-align: left; display: flex; justify-content: space-between; align-items: center; }
+            .ui-bottom-center { bottom: 15px; width: 92%; }
+            
+            .floating-ui .label { font-size: 9px; margin-bottom: 2px; }
+            .floating-ui .value { font-size: 14px; }
+            .dim-input-group input { width: 35px; font-size: 13px; }
+            
+            .science, .downloads { padding: 60px 5%; }
+            .science-text h2, .downloads h2 { font-size: 2rem; }
+            .equation { font-size: 1.1rem; }
+            
+            .os-card { width: 100%; max-width: 350px; padding: 30px; }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 2.2rem; }
+            .ui-top-left { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .ui-top-right { bottom: 170px; flex-direction: column; align-items: flex-start; gap: 5px; }
+        }
     </style>
 </head>
 <body>
 
     <nav>
         <div class="logo-nav">
-            <img src="oodio logo.jpg" alt="oodio logo"> OODIO
+            <img src="OODIO LOGO.jpg" alt="OODIO Logo"> OODIO
         </div>
         <div class="nav-links">
             <a href="#engine">DSP Physics</a>
@@ -169,29 +207,35 @@
             <canvas id="hero-canvas"></canvas>
             
             <div class="floating-ui ui-top-left">
-                <div class="label" style="margin-bottom: 10px;">Physical Bounds (meters)</div>
-                <div class="dim-controls">
-                    <div class="dim-input-group">
-                        <span>L</span><input type="number" id="dim-l" value="20" min="2" max="100">
-                    </div>
-                    <div class="dim-input-group">
-                        <span>W</span><input type="number" id="dim-w" value="15" min="2" max="100">
-                    </div>
-                    <div class="dim-input-group">
-                        <span>H</span><input type="number" id="dim-h" value="10" min="2" max="50">
+                <div>
+                    <div class="label" style="margin-bottom: 5px;">Physical Bounds (meters)</div>
+                    <div class="dim-controls">
+                        <div class="dim-input-group">
+                            <span>L</span><input type="number" id="dim-l" value="20" min="2" max="100">
+                        </div>
+                        <div class="dim-input-group">
+                            <span>W</span><input type="number" id="dim-w" value="15" min="2" max="100">
+                        </div>
+                        <div class="dim-input-group">
+                            <span>H</span><input type="number" id="dim-h" value="10" min="2" max="50">
+                        </div>
                     </div>
                 </div>
-                <div style="margin-top: 15px;">
+                <div>
                     <div class="value" style="font-size: 11px; color: #FF2A6D; margin-bottom: 4px;">● Listener Point</div>
                     <div class="value" style="font-size: 11px; color: #10B981;">■ Audio Source</div>
                 </div>
             </div>
 
             <div class="floating-ui ui-top-right">
-                <div class="label">Live Metrics</div>
-                <div class="value" id="t60-display">T60: 2.50s</div>
-                <div class="label" style="margin-top: 8px;">Room Volume</div>
-                <div class="value" id="vol-display" style="font-size: 14px; color: #9CA3AF;">3000 m³</div>
+                <div>
+                    <div class="label">Live Metrics</div>
+                    <div class="value" id="t60-display">T60: 2.50s</div>
+                </div>
+                <div>
+                    <div class="label">Room Volume</div>
+                    <div class="value" id="vol-display" style="font-size: 14px; color: #9CA3AF;">3000 m³</div>
+                </div>
             </div>
             
             <div class="floating-ui ui-bottom-center glass-panel">
